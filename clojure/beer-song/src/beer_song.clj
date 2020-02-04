@@ -19,8 +19,8 @@
        (verse-data :take-one-down-and-pass-it-around) ", "
        (dec num) " " (verse-data :bottles-of-beer-on-the-wall) ".\n"))
 
-(defn verse-seq
-  "Get the verse sequence in reverse order."
+(defn reversed-num-seq
+  "Returns a sequence of numbers in reverse order."
   ([start] (reverse (range (inc start))))
   ([start end] (reverse (range end (inc start)))))
 
@@ -28,15 +28,15 @@
   "Returns the nth verse of the song."
   [num]
   (cond
-    (or (= num 0) (= num 1) (= num 2)) (verse-data num)
+    (contains? #{0 1 2} num) (verse-data num)
     :else  (verse-for-multiple-bottles num)))
 
-(defn interposed-verses [verse-seq]
-  (let [verses (map verse verse-seq)]
+(defn interpose-verses [reversed-num-seq]
+  (let [verses (map verse reversed-num-seq)]
     (apply str (interpose "\n" verses))))
 
 (defn sing
   "Given a start and an optional end, returns all verses in this interval. If
   end is not given, the whole song from start is sung."
-  ([start] (interposed-verses (verse-seq start)))
-  ([start end] (interposed-verses (verse-seq start end))))
+  ([start] (interpose-verses (reversed-num-seq start)))
+  ([start end] (interpose-verses (reversed-num-seq start end))))
