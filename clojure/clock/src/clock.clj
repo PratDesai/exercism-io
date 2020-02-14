@@ -1,17 +1,16 @@
 (ns clock)
 
 (def minutes-per-day 1440)
-
 (def minutes-per-hour 60)
 
-(defn hours->minutes [hours]
+(defn- hours->minutes [hours]
   (* hours minutes-per-hour))
 
-(defn normalized-minutes [minutes]
+(defn- normalized-minutes [minutes]
   (cond (neg? minutes) (+ (rem minutes minutes-per-day) minutes-per-day)
         :else (rem minutes minutes-per-day)))
 
-(defn minutes->clock [minutes]
+(defn- minutes->clock [minutes]
   (let [rem-minutes (rem minutes 60)
         total-hours (quot minutes 60)
         hours (rem total-hours 24)]
@@ -30,13 +29,3 @@
        (+ minutes)
        normalized-minutes
        minutes->clock))
-
-(comment 
-  (clock 0 0)
-  (clock 0 1)
-  (clock 0 -1)
-  (clock 24 0)
-  (clock -24 0)
-  (clock -1 0)
-  
-  )
