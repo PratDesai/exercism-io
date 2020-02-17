@@ -1,17 +1,7 @@
 (ns etl)
 
 (defn transform [source]
-  (let [k (key (first source))
-        v (val (first source))]))
-
-(def aaa {1 ["WORLD" "GSCHOOLERS"]})
-
-(def k (key (first aaa)))
-(def v (val (first aaa)))
-
-(mapv #(hash-map % k) v)
-(zipmap (map clojure.string/lower-case v) (repeat k))
-
-(+ 1 2)
-
-(def test-str "abcdefhi")
+  (let [kys (keys source)
+        vls (vals source)
+        key-vals (map (fn [k vls] (map #(hash-map (.toLowerCase %) k) vls)) kys vls)]
+    (into {} (mapcat identity key-vals))))
