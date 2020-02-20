@@ -1,17 +1,10 @@
 (ns sum-of-multiples)
 
-(defn- next-multiples [multiples multiplier]
-  (map #(* % multiplier) multiples))
+(defn multiple? [num div]
+   (zero? (mod num div)))
 
-(defn- less-than-multiples [multiples max-val]
-  (filter #(< % max-val) multiples))
-
-(defn sum-of-multiples [multiples num]
-  (->>
-   (loop [acc #{} multiplier 1]
-     (let [next-multiples (-> (next-multiples multiples multiplier)
-                              (less-than-multiples num))]
-       (if (seq next-multiples)
-         (recur (into acc next-multiples) (inc multiplier))
-         acc)))
-   (apply +)))
+(defn sum-of-multiples [coll limit]
+  (let [factors (drop 1 (range limit))
+        multiples? (fn [num] (some (partial multiple? num) coll))
+        multiples (filter multiples? factors)]
+    (apply + multiples)))
