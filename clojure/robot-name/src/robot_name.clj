@@ -1,22 +1,21 @@
 (ns robot-name)
 
-(def robots (atom []))
 (def alphabets "ABCDEFGHIJKLMNOPQRSTUVWXYZ")
-(def numbers "0123456789")
+(def robots (atom []))
 
 (defn- take-rand [coll n]
   (apply str (take n (repeatedly #(rand-nth coll)))))
 
 (defn- create-name []
    (str (take-rand alphabets 2) 
-        (take-rand numbers 3)))
+        (take-rand (range 10) 3)))
 
-(defn- is-unique-name? [name]
+(defn- is-name-unique? [name]
   (not-any? #(= % name) (mapcat #(vals @%) @robots)))
 
 (defn- create-unique-name []
-  (->> (take 10 (repeatedly create-name))
-       (filter is-unique-name?)
+  (->> (repeatedly create-name)
+       (filter is-name-unique?)
        first))
 
 (defn robot []
