@@ -21,4 +21,3 @@
                 is-question "Sure."
                 is-yelling "Whoa, chill out!"
                 :else "Whatever.")))))
-
