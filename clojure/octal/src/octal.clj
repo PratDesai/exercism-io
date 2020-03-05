@@ -10,14 +10,11 @@
 (defn- pow-seq [x]
   (map #(reduce *'  (repeat % x)) (range)))
 
-(defn- reverse-seq [s]
-  (reduce (fn [acc el] (conj acc el)) '() s))
-
 (defn to-decimal [s]
   (cond
     (not-octal? s) 0
     :else (->>
-           (reverse-seq s)
+           (reverse s)
            (map char->digit)
            (map * (pow-seq 8))
            (reduce +))))
