@@ -1,19 +1,34 @@
 (ns phone-number)
 
-(defn number [num-string]
-  (let [clean-num (apply str (filter #(Character/isDigit %) num-string))
-        num-count (count clean-num)]
-    (cond (or (< num-count 10) (> num-count 11)) "0000000000"
-          :else (->> (#(if (> (count %) 10) (rest %) %))))))
+(def ^:private invalid-response "0000000000")
+(def ^:private minimum-digits 10)
 
-(defn area-code [num-string] 
-  (let [number (number num-string)]
-    (->> (take 3 number)
-         (apply str))))
+(defn- digits-only [num-string]
+  (->> num-string
+       (re-seq #"\d+")
+       (apply str)))
+
+(defn- validate-number [number]
+  (let [num-digits (count number)]
+    (cond
+      (< num-digits minimum-digits) invalid-response
+      (= num-digits minimum-digits) number
+      :else (if (= \1 (first number))
+              (apply str (rest number))
+              invalid-response))))
+
+(defn number [num-string]
+  (->> num-string
+       digits-only
+       validate-number))
+
+(defn area-code [num-string]
+  (->> num-string
+       number
+       (re-find #"\d{3}")))
 
 (defn pretty-print [num-string]
-  (let [number (number num-string)
-        area-code (area-code number)]
-    area-code))
-
-" G <G><NL>"
+  (->> num-string
+       number
+       ((comp rest #(re-find #"(\d{3})(\d{3})(\d{4})" %)))
+       (#(str "(" (first %) ") " (first (rest %)) "-" (last %)))))

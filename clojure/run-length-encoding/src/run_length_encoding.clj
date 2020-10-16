@@ -4,7 +4,7 @@
 (defn run-length-encode
   "encodes a string with run-length-encoding"
   [plain-text]
-  (let [char-groups (map first (re-seq #"(.)\1+|." plain-text))]
+  (let [char-groups (map first (re-seq #"(.)\1*" plain-text))]
     (->> char-groups
          (map #(if (> (count %) 1)
                  (str (count %) (first %))
