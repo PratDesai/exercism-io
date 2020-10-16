@@ -6,31 +6,31 @@
 
 (deftest encode-empty-string
   (testing "encode an empty string"
-    (is (= (rle/run-length-encode "") ""))))
+    (is (= "" (rle/run-length-encode "")))))
 
 (deftest encode-single-characters-without-count
   (testing "encode single characters without count"
-    (is (= (rle/run-length-encode "XYZ") "XYZ"))))
+    (is (= "XYZ" (rle/run-length-encode "XYZ")))))
 
 (deftest encode-string-with-no-single-characters
   (testing "encode string with no single characters"
-    (is (= (rle/run-length-encode "AABBBCCCC") "2A3B4C"))))
+    (is (= "2A3B4C" (rle/run-length-encode "AABBBCCCC")))))
 
 (deftest encode-string-with-single-and-mixed-characters
   (testing "encode string with single and mixed characters"
-    (is (= (rle/run-length-encode "WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWB") "12WB12W3B24WB"))))
+    (is (= "12WB12W3B24WB" (rle/run-length-encode "WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWB")))))
 
 (deftest encode-multiple-whitespace
   (testing "encode string with whitespace characters mixed in it"
-    (is (= (rle/run-length-encode "  hsqq qww  ") "2 hs2q q2w2 "))))
+    (is (= "2 hs2q q2w2 " (rle/run-length-encode "  hsqq qww  ")))))
 
 (deftest encode-lowercase
   (testing "encode string with lowercase characters"
-    (is (= (rle/run-length-encode "aabbbcccc") "2a3b4c"))))
+    (is (= "2a3b4c" (rle/run-length-encode "aabbbcccc")))))
 
 (deftest decode-empty-string
   (testing "decode empty string"
-    (is (= (rle/run-length-decode "") ""))))
+    (is (= "" (rle/run-length-decode "")))))
 
 (deftest decode-single-characters
   (testing "decode string with single characters only"
@@ -42,7 +42,7 @@
 
 (deftest decode-single-and-repeated-characters
   (testing "decode string with single and repeated characters"
-    (is (= (rle/run-length-decode "12WB12W3B24WB") "WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWB"))))
+    (is (= "WWWWWWWWWWWWBWWWWWWWWWWWWBBBWWWWWWWWWWWWWWWWWWWWWWWWB" (rle/run-length-decode "12WB12W3B24WB")))))
 
 (deftest decode-lowercase
   (testing "decode string with lowercase characters"
