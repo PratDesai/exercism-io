@@ -16,19 +16,3 @@
 ;   - File URLs in stacktrace frames are peekable and clickable.
 clj::user=> 
 ; Jack-in done.
-\1
-clj::phone-number=> 
-"123"
-clj::phone-number-test=> 
-#'phone-number/digits-only
-clj::phone-number=> 
-"9876543210"
-clj::phone-number=> 
-("123" "456" "789")
-clj::phone-number=> 
-"1234567890"
-clj::phone-number=> 
-["123456789" "123" "456" "789"]
-clj::phone-number=> 
-["1234567890" "123" "456" "7890"]
-clj::phone-number=> 
