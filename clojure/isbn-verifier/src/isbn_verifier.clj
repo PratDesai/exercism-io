@@ -4,26 +4,23 @@
   (->> s
        (remove #{\-})
        (apply str)
-       (re-seq #"\d{9}[\dX]$")
-       first))
+       (re-matches #"\d{9}[\dX]$")))
 
 (defn- digits [s]
   (->> s
-       (map str)
-       (replace {"X" "10"})
-       (map #(Integer. %))))
+       (map #(Character/digit % 10))
+       (replace {-1 10})))
 
-(defn- isbn-calc-check [digits]
-  (->> digits
+(defn- isbn-calc-check [nums]
+  (->> nums
        (map * (range 10 0 -1))
        (apply +)
        (#(mod % 11))
-       (= 0)))
+       zero?))
 
-(defn isbn? [isbn] 
-  (let [parsed (parse isbn)]
-    (if parsed
-      (->> parsed 
-           digits
-           isbn-calc-check)
-      false)))
+(defn isbn? [isbn]
+  (true?
+   (when-let [parsed (parse isbn)]
+     (->> parsed
+          digits
+          isbn-calc-check))))
