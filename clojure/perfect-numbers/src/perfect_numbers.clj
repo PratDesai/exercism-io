@@ -1,7 +1,7 @@
 (ns perfect-numbers)
 
 (defn factors [n]
-  (filter #(zero? (mod n %)) (range 1 n)))
+  (filter #(zero? (mod n %)) (range 1 (inc (/ n 2)))))
 
 (defn classify [n]
   (if (neg? n)
