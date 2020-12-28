@@ -1,2 +1,2 @@
 # exercism-clojure
-The Clojure track on Exercism.io
+Solutions to various programming tracks on Exercism.io
