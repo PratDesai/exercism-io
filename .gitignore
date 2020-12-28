@@ -13,3 +13,11 @@ target/
 .lein-failures
 .nrepl-port
 .cpcache/
+
+
+# csharp
+.vs/
+bin/
+obj/
+.editorconfig
+
