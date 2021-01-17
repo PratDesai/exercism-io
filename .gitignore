@@ -14,10 +14,13 @@ target/
 .nrepl-port
 .cpcache/
 
+#calva
+.clj-kondo/
+.calva/
+.lsp/
 
 # csharp
 .vs/
 bin/
 obj/
 .editorconfig
-
