@@ -3,9 +3,8 @@
 
 (def empty-board
   (->> ["_" "_" "_" "_" "_" "_" "_" "_"]
-       repeat
-       (take 8)
-       (into [])))
+       (repeat 8)
+       vec))
 
 (defn board->str [board]
   (->> board
@@ -13,22 +12,14 @@
        (map #(str % "\n"))
        (apply str)))
 
-(defn update-board [board {:keys [w b]}]
-  (-> (assoc-in board w \W)
-      (assoc-in b \B)))
+(defn board-string [{:keys [w b]}]
+  (-> empty-board
+      (cond-> w (assoc-in w \W)
+              b (assoc-in b \B))
+      board->str))
 
-(defn straight? [{[wx wy] :w [bx by] :b}]
-  (or (= wx bx) (= wy by)))
-
-(defn diagonal? [{[wx wy] :w [bx by] :b}]
-  (let [dx (Math/abs (- wx bx))
-        dy (Math/abs (- wy by))]
-    (= dx dy)))
-
-(defn board-string [{:keys [w b] :as state}]
-  (if (and  w b)
-    (board->str (update-board empty-board state))
-    (board->str empty-board)))
-
-(defn can-attack [{:keys [w b] :as state}]
-  (or (straight? state) (diagonal? state)))
+(defn can-attack [{[wx wy] :w [bx by] :b :as state}]
+  (or (= wx bx)
+      (= wy by)
+      (= (Math/abs (- wx bx))
+         (Math/abs (- wy by)))))
