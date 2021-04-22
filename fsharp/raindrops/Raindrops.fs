@@ -6,12 +6,9 @@ let rainDropSounds =
       (7, "Plong") ]
 
 let convert (number: int) : string =
-    let isRainSound (f, _) = number % f = 0
-    let getSound (_, s) = s
-
     rainDropSounds
-    |> List.filter isRainSound
-    |> List.map getSound
+    |> List.filter (fun (f, _) -> number % f = 0)
+    |> List.map snd
     |> List.fold (+) ""
     |> function
     | "" -> $"{number}"
