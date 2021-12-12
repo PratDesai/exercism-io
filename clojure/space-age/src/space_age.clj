@@ -1,25 +1,20 @@
 (ns space-age)
 
-(defn on-mercury [s]
-  (/ s 7600543.81992))
+(defn- on-planet [planet-seconds seconds]
+  (/ seconds planet-seconds))
 
-(defn on-venus [s]
-  (/ s 1.9414149052176E7))
+(def on-mercury (partial on-planet 7600543.81992))
 
-(defn on-earth [s]
-  (/ s 31557600))
+(def on-venus (partial on-planet 1.9414149052176E7))
 
-(defn on-mars [s]
-  (/ s 5.9354032690079994E7))
+(def on-earth (partial on-planet 31557600))
 
-(defn on-jupiter [s]
-  (/ s 3.74355659124E8))
+(def on-mars (partial on-planet 5.9354032690079994E7))
 
-(defn on-saturn [s]
-  (/ s 9.292923628848E8))
+(def on-jupiter (partial on-planet 3.74355659124E8))
 
-(defn on-neptune [s]
-  (/ s 5.200418560032001E9))
+(def on-saturn (partial on-planet 9.292923628848E8))
 
-(defn on-uranus [s]
-  (/ s 2.6513700193296E9))
+(def on-neptune (partial on-planet 5.200418560032001E9))
+
+(def on-uranus (partial on-planet 2.6513700193296E9))
