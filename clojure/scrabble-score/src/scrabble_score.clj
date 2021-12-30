@@ -1,21 +1,22 @@
-(ns scrabble-score)
+(ns scrabble-score
+  (:require [clojure.string :as str]))
 
-(def letter-scores
-  [[#{\A, \E, \I, \O, \U, \L, \N, \R, \S, \T} 1]
-   [#{\D, \G} 2]
-   [#{\B, \C, \M, \P} 3]
-   [#{\F, \H, \V, \W, \Y} 4]
-   [#{\K} 5]
-   [#{\J \X} 8]
-   [#{\Q \Z} 10]])
+(def letter-points {(set "AEIOULNRST") 1
+                    (set "DG") 2
+                    (set "BCMP") 3
+                    (set "FHVWY") 4
+                    (set "K") 5
+                    (set "JX") 8
+                    (set "QZ") 10})
 
-(defn score-letter [l]
-  (let [upper-case (first (clojure.string/upper-case l))
-        [_ score] (first (filter (fn [[letters score]] (letters upper-case)) letter-scores))]
-    score))
+(defn score-letter [w]
+  (let [c (first (str/upper-case w))]
+    (->> letter-points
+         (filter #((key %) c))
+         first
+         val)))
 
-(defn score-word [word]
-  (->> word
-       (clojure.string/upper-case)
+(defn score-word [w]
+  (->> w
        (map score-letter)
        (apply +)))
