@@ -1,9 +1,9 @@
-(ns trinary
-  (:require [clojure.math.numeric-tower :as math]))
+(ns trinary)
 
 (defn to-decimal [n]
-  (->> (or (re-find #"^[0-2]+$" n) "0")
-       reverse
-       (map #(Character/digit % 10))
-       (map #(* %2 (math/expt 3 %1)) (range))
-       (apply +)))
+  (letfn [(exp [x n] (reduce * (repeat n x)))]
+    (->> (or (re-find #"^[0-2]+$" n) "0")
+         reverse
+         (map #(Character/digit % 10))
+         (map #(* %2 (exp 3 %1)) (range))
+         (apply +))))
